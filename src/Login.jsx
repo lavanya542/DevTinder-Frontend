@@ -1,0 +1,53 @@
+import {useState} from 'react'
+import axios from 'axios'
+const Login=()=>{
+    const [email,setEmail]=useState("");
+    const [password,setPassword]=useState("");
+    const getData=async (e)=>{
+        
+        e.preventDefault();//it will prevent the page from reloading
+        try {
+            const response = await axios.post('http://localhost:3000/login', {
+              email,
+              password,
+            },{withCredentials:true});
+            console.log('Submitted:', email, password);
+            console.log('Response:', response);
+          } catch (error) {
+            console.error('Login failed:', error);
+          }
+        };
+
+    
+    return (
+        <div>
+            <form  onSubmit={getData}>
+           <div className="card card-dash bg-base-100 w-96 my-10 mx-100">
+  <div className="card-body">
+    <h2 className="card-title">Login</h2>
+    <fieldset className="fieldset">
+  <legend className="fieldset-legend">Email</legend>
+  <input type="text" className="input" onChange={(e)=>{
+    setEmail(e.target.value);
+    
+  }} />
+  
+</fieldset>
+<fieldset className="fieldset">
+  <legend className="fieldset-legend">Password</legend>
+  <input type="password" className="input"  onChange={(e)=>{
+    setPassword(e.target.value);
+    
+  }}/>
+  
+</fieldset>
+    <div className="card-actions justify-end">
+      <button className="btn btn-primary" >login</button>
+    </div>
+  </div>
+</div>
+</form>
+        </div>
+    )
+}
+export default Login
