@@ -1,18 +1,26 @@
 import {useState} from 'react'
 import axios from 'axios'
+import {useDispatch}  from 'react-redux';
+import {addUser} from '../utils/userSlice'
+import {useNavigate} from 'react-router-dom'
+import {BASE_URL} from '../utils/constants'
 const Login=()=>{
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
     const getData=async (e)=>{
         
         e.preventDefault();//it will prevent the page from reloading
         try {
-            const response = await axios.post('http://localhost:3000/login', {
+            const response = await axios.post(BASE_URL+"/login", {
               email,
               password,
             },{withCredentials:true});
             console.log('Submitted:', email, password);
             console.log('Response:', response);
+            dispatch(addUser(response.data));
+            navigate('/')
           } catch (error) {
             console.error('Login failed:', error);
           }
