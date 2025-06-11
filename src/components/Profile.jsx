@@ -1,7 +1,13 @@
+import ProfileForm from './ProfileForm'
+
+import {useSelector} from 'react-redux'
 const Profile=()=>{
+    const user=useSelector((store)=>store.user);
+
     return(
-        <div>
-            <h1>Profile</h1>
+        <div >
+           {user&&<ProfileForm data={user.data}/>}
+          
         </div>
     )
 }
